@@ -3,6 +3,7 @@ const path = require("path");
 const developerRouter = require("./routes/developerRouter");
 const publisherRouter = require("./routes/publisherRouter");
 const platformRouter = require("./routes/platformRouter");
+const genreRouter = require("./routes/genreRouter");
 
 const app = express();
 app.set("views", path.join(__dirname, "views"));
@@ -13,6 +14,7 @@ const PORT = 3000;
 app.use("/developers", developerRouter);
 app.use("/publishers", publisherRouter);
 app.use("/platforms", platformRouter);
+app.use("/genres", genreRouter);
 
 app.listen(PORT, () =>
   console.log(`Server was laucnhed: http://localhost:${PORT}/`)

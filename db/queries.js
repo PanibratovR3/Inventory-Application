@@ -75,6 +75,11 @@ async function deletePlatform(id) {
   await pool.query("DELETE FROM platform WHERE id = $1", [id]);
 }
 
+async function getAllGenres() {
+  const { rows } = await pool.query("SELECT * FROM genre");
+  return rows;
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -91,4 +96,5 @@ module.exports = {
   getPlatformById,
   updatePlatform,
   deletePlatform,
+  getAllGenres,
 };
