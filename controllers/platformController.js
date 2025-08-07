@@ -41,8 +41,40 @@ const createPlatformPost = [
     }
   },
 ];
+
+async function updatePlatformGet(request, response) {
+  const { id } = request.params;
+  const platform = await queries.getPlatformById(Number(id));
+  response.render("updatePlatform", {
+    title: "Update platform",
+    platform: platform,
+  });
+}
+
+const updatePlatformPost = [
+  validatePlatform,
+  async (request, response) => {
+    const { id } = request.params;
+    const { platformName } = request.body;
+    const platform = await queries.getPlatformById(Number(id));
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      response.render("updatePlatform", {
+        title: "Update platform",
+        platform: platform,
+        errors: errors.array(),
+      });
+    } else {
+      await queries.updatePlatform(Number(id), platformName);
+      response.redirect("/platforms");
+    }
+  },
+];
+
 module.exports = {
   showAllPlatforms,
   createPlatformGet,
   createPlatformPost,
+  updatePlatformGet,
+  updatePlatformPost,
 };

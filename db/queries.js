@@ -59,6 +59,18 @@ async function createPlatform(name) {
   await pool.query("INSERT INTO platform(name) VALUES($1)", [name]);
 }
 
+async function getPlatformById(id) {
+  const { rows } = await pool.query(
+    "SELECT id, name FROM platform WHERE id = $1",
+    [id]
+  );
+  return rows[0];
+}
+
+async function updatePlatform(id, name) {
+  await pool.query("UPDATE platform SET name = $1 WHERE id = $2", [name, id]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -72,4 +84,6 @@ module.exports = {
   deletePublisher,
   getAllPlatforms,
   createPlatform,
+  getPlatformById,
+  updatePlatform,
 };

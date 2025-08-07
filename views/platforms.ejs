@@ -13,7 +13,11 @@
                 <% platforms.forEach((platform) => { %>
                     <tr>
                         <td><%= platform.id %></td>
-                        <td><%= platform.name %></td>
+                        <td>
+                            <a href="/platforms/<%= platform.id %>/update">
+                                <%= platform.name %>
+                            </a>
+                        </td>
                     </tr>
                 <% }); %>
             <% }; %>
