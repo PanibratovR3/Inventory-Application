@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h1><%= title %></h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            <% if (locals.platforms) { %>
+                <% platforms.forEach((platform) => { %>
+                    <tr>
+                        <td><%= platform.id %></td>
+                        <td><%= platform.name %></td>
+                    </tr>
+                <% }); %>
+            <% }; %>
+        </table>
+    </body>
+</html>

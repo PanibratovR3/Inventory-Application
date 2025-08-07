@@ -50,6 +50,11 @@ async function deletePublisher(id) {
   await pool.query("DELETE FROM publisher WHERE id = $1", [id]);
 }
 
+async function getAllPlatforms() {
+  const { rows } = await pool.query("SELECT * FROM platform");
+  return rows;
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -61,4 +66,5 @@ module.exports = {
   getPublisherById,
   updatePublisher,
   deletePublisher,
+  getAllPlatforms,
 };
