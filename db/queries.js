@@ -55,6 +55,10 @@ async function getAllPlatforms() {
   return rows;
 }
 
+async function createPlatform(name) {
+  await pool.query("INSERT INTO platform(name) VALUES($1)", [name]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -67,4 +71,5 @@ module.exports = {
   updatePublisher,
   deletePublisher,
   getAllPlatforms,
+  createPlatform,
 };
