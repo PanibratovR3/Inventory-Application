@@ -5,6 +5,11 @@ async function getAllDevelopers() {
   return rows;
 }
 
+async function createDeveloper(name) {
+  await pool.query("INSERT INTO developer(name) VALUES($1);", [name]);
+}
+
 module.exports = {
   getAllDevelopers,
+  createDeveloper,
 };
