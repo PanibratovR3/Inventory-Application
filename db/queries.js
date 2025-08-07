@@ -34,6 +34,18 @@ async function createPublisher(name) {
   await pool.query("INSERT INTO publisher(name) VALUES($1);", [name]);
 }
 
+async function getPublisherById(id) {
+  const { rows } = await pool.query(
+    "SELECT id, name FROM publisher WHERE id = $1",
+    [id]
+  );
+  return rows[0];
+}
+
+async function updatePublisher(id, name) {
+  await pool.query("UPDATE publisher SET name = $1 WHERE id = $2", [name, id]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -42,4 +54,6 @@ module.exports = {
   deleteDeveloper,
   getAllPublishers,
   createPublisher,
+  getPublisherById,
+  updatePublisher,
 };

@@ -1,3 +1,4 @@
+const pool = require("../db/pool");
 const queries = require("../db/queries");
 const { body, validationResult } = require("express-validator");
 
@@ -42,8 +43,39 @@ const createPublisherPost = [
   },
 ];
 
+async function updatePublisherGet(request, response) {
+  const { id } = request.params;
+  const publisher = await queries.getPublisherById(Number(id));
+  response.render("updatePublisher", {
+    title: "Update publisher",
+    publisher: publisher,
+  });
+}
+
+const updatePublisherPost = [
+  validatePublisher,
+  async (request, response) => {
+    const { id } = request.params;
+    const publisher = await queries.getPublisherById(Number(id));
+    const { publisherName } = request.body;
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      response.render("updatePublisher", {
+        title: "Update publisher",
+        publisher: publisher,
+        errors: errors.array(),
+      });
+    } else {
+      await queries.updatePublisher(id, publisherName);
+      response.redirect("/publishers");
+    }
+  },
+];
+
 module.exports = {
   showAllPublishers,
   createPublisherGet,
   createPublisherPost,
+  updatePublisherGet,
+  updatePublisherPost,
 };

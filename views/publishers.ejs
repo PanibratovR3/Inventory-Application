@@ -13,7 +13,11 @@
                 <% publishers.forEach((publisher) => { %>
                     <tr>
                         <td><%= publisher.id %></td>
-                        <td><%= publisher.name %></td>
+                        <td>
+                            <a href="/publishers/<%= publisher.id %>/update">
+                                <%= publisher.name %>
+                            </a>
+                        </td>
                     </tr>
                 <% }); %>
             <% }; %>
