@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h1><%= title %></h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            <% if (locals.publishers) {%>
+                <% publishers.forEach((publisher) => { %>
+                    <tr>
+                        <td><%= publisher.id %></td>
+                        <td><%= publisher.name %></td>
+                    </tr>
+                <% }); %>
+            <% }; %>
+        </table>
+    </body>
+</html>
