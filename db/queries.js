@@ -30,6 +30,10 @@ async function getAllPublishers() {
   return rows;
 }
 
+async function createPublisher(name) {
+  await pool.query("INSERT INTO publisher(name) VALUES($1);", [name]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -37,4 +41,5 @@ module.exports = {
   updateDeveloper,
   deleteDeveloper,
   getAllPublishers,
+  createPublisher,
 };
