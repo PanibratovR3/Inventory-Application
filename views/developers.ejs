@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h1><%= title %></h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            <% if (locals.developers) {%>
+                <% developers.forEach((developer) => { %>
+                    <tr>
+                        <td><%= developer.id %></td>
+                        <td><%= developer.name %></td>
+                    </tr>
+                <% }); %>
+            <% } %>
+        </table>
+    </body>
+</html>
