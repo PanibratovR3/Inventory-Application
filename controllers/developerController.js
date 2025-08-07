@@ -70,10 +70,17 @@ const updateDeveloperPost = [
   },
 ];
 
+async function deleteDeveloperPost(request, response) {
+  const { id } = request.params;
+  await queries.deleteDeveloper(Number(id));
+  response.redirect("/developers");
+}
+
 module.exports = {
   showAllDevelopers,
   createDeveloperGet,
   createDeveloperPost,
   updateDeveloperGet,
   updateDeveloperPost,
+  deleteDeveloperPost,
 };

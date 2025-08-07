@@ -21,9 +21,14 @@ async function updateDeveloper(id, name) {
   await pool.query("UPDATE developer SET name = $1 WHERE id = $2", [name, id]);
 }
 
+async function deleteDeveloper(id) {
+  await pool.query("DELETE FROM developer WHERE id = $1", [id]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
   getDeveloperById,
   updateDeveloper,
+  deleteDeveloper,
 };
