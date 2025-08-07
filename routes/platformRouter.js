@@ -9,5 +9,6 @@ platformRouter.get("/create", platformController.createPlatformGet);
 platformRouter.post("/create", platformController.createPlatformPost);
 platformRouter.get("/:id/update", platformController.updatePlatformGet);
 platformRouter.post("/:id/update", platformController.updatePlatformPost);
+platformRouter.post("/:id/delete", platformController.deletePlatformPost);
 
 module.exports = platformRouter;

@@ -71,10 +71,17 @@ const updatePlatformPost = [
   },
 ];
 
+async function deletePlatformPost(request, response) {
+  const { id } = request.params;
+  await queries.deletePlatform(Number(id));
+  response.redirect("/platforms");
+}
+
 module.exports = {
   showAllPlatforms,
   createPlatformGet,
   createPlatformPost,
   updatePlatformGet,
   updatePlatformPost,
+  deletePlatformPost,
 };

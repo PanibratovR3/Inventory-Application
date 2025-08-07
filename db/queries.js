@@ -71,6 +71,10 @@ async function updatePlatform(id, name) {
   await pool.query("UPDATE platform SET name = $1 WHERE id = $2", [name, id]);
 }
 
+async function deletePlatform(id) {
+  await pool.query("DELETE FROM platform WHERE id = $1", [id]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -86,4 +90,5 @@ module.exports = {
   createPlatform,
   getPlatformById,
   updatePlatform,
+  deletePlatform,
 };
