@@ -35,10 +35,11 @@ const createDeveloperPost = [
         title: "Add new developer",
         errors: errors.array(),
       });
+    } else {
+      const { developerName } = request.body;
+      await queries.createDeveloper(developerName);
+      response.redirect("/developers");
     }
-    const { developerName } = request.body;
-    await queries.createDeveloper(developerName);
-    response.redirect("/developers");
   },
 ];
 
@@ -64,9 +65,10 @@ const updateDeveloperPost = [
         developer: developer,
         errors: errors.array(),
       });
+    } else {
+      await queries.updateDeveloper(Number(id), developerName);
+      response.redirect("/developers");
     }
-    await queries.updateDeveloper(Number(id), developerName);
-    response.redirect("/developers");
   },
 ];
 
