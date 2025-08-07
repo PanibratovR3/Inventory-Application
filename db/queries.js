@@ -46,6 +46,10 @@ async function updatePublisher(id, name) {
   await pool.query("UPDATE publisher SET name = $1 WHERE id = $2", [name, id]);
 }
 
+async function deletePublisher(id) {
+  await pool.query("DELETE FROM publisher WHERE id = $1", [id]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -56,4 +60,5 @@ module.exports = {
   createPublisher,
   getPublisherById,
   updatePublisher,
+  deletePublisher,
 };

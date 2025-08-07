@@ -8,5 +8,6 @@ publisherRouter.get("/create", publisherController.createPublisherGet);
 publisherRouter.post("/create", publisherController.createPublisherPost);
 publisherRouter.get("/:id/update", publisherController.updatePublisherGet);
 publisherRouter.post("/:id/update", publisherController.updatePublisherPost);
+publisherRouter.post("/:id/delete", publisherController.deletePublisherPost);
 
 module.exports = publisherRouter;

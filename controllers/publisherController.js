@@ -72,10 +72,17 @@ const updatePublisherPost = [
   },
 ];
 
+async function deletePublisherPost(request, response) {
+  const { id } = request.params;
+  await queries.deletePublisher(Number(id));
+  response.redirect("/publishers");
+}
+
 module.exports = {
   showAllPublishers,
   createPublisherGet,
   createPublisherPost,
   updatePublisherGet,
   updatePublisherPost,
+  deletePublisherPost,
 };
