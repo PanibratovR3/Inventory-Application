@@ -9,7 +9,21 @@ async function createDeveloper(name) {
   await pool.query("INSERT INTO developer(name) VALUES($1);", [name]);
 }
 
+async function getDeveloperById(id) {
+  const { rows } = await pool.query(
+    "SELECT id, name FROM developer WHERE id = $1",
+    [id]
+  );
+  return rows[0];
+}
+
+async function updateDeveloper(id, name) {
+  await pool.query("UPDATE developer SET name = $1 WHERE id = $2", [name, id]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
+  getDeveloperById,
+  updateDeveloper,
 };

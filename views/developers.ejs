@@ -13,7 +13,7 @@
                 <% developers.forEach((developer) => { %>
                     <tr>
                         <td><%= developer.id %></td>
-                        <td><%= developer.name %></td>
+                        <td><a href="/developers/<%= developer.id %>/update"><%= developer.name %></a></td>
                     </tr>
                 <% }); %>
             <% } %>

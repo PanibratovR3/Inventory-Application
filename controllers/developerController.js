@@ -42,8 +42,38 @@ const createDeveloperPost = [
   },
 ];
 
+async function updateDeveloperGet(request, response) {
+  const { id } = request.params;
+  const developer = await queries.getDeveloperById(Number(id));
+  response.render("updateDeveloper", {
+    title: "Update developer",
+    developer: developer,
+  });
+}
+
+const updateDeveloperPost = [
+  validateDeveloper,
+  async (request, response) => {
+    const { id } = request.params;
+    const { developerName } = request.body;
+    const developer = await queries.getDeveloperById(Number(id));
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      response.render("updateDeveloper", {
+        title: "Update developer",
+        developer: developer,
+        errors: errors.array(),
+      });
+    }
+    await queries.updateDeveloper(Number(id), developerName);
+    response.redirect("/developers");
+  },
+];
+
 module.exports = {
   showAllDevelopers,
   createDeveloperGet,
   createDeveloperPost,
+  updateDeveloperGet,
+  updateDeveloperPost,
 };
