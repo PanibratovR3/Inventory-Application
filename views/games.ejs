@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h1><%= title %></h1>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Developer</th>
+                <th>Genre</th>
+                <th>Publisher</th>
+                <th>Platform</th>
+                <th>Date of release</th>
+            </tr>
+            <% if (locals.games) { %>
+                <% games.forEach((game) => { %>
+                    <tr>
+                        <td><%= game.title %></td>
+                        <td><%= game.developername %></td>
+                        <td><%= game.genrename %></td>
+                        <td><%= game.publishername %></td>
+                        <td><%= game.platformname %></td>
+                        <td><%= game.dateofrelease.getFullYear() %>-<%= game.dateofrelease.getMonth()+1 %>-<%= game.dateofrelease.getDate() %></td>
+                    </tr>
+                <% }); %>
+            <% }; %>
+        </table>
+    </body>
+</html>

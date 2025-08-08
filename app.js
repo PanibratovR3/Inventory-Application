@@ -4,6 +4,7 @@ const developerRouter = require("./routes/developerRouter");
 const publisherRouter = require("./routes/publisherRouter");
 const platformRouter = require("./routes/platformRouter");
 const genreRouter = require("./routes/genreRouter");
+const gameRouter = require("./routes/gameRouter");
 
 const app = express();
 app.set("views", path.join(__dirname, "views"));
@@ -15,6 +16,7 @@ app.use("/developers", developerRouter);
 app.use("/publishers", publisherRouter);
 app.use("/platforms", platformRouter);
 app.use("/genres", genreRouter);
+app.use("/", gameRouter);
 
 app.listen(PORT, () =>
   console.log(`Server was laucnhed: http://localhost:${PORT}/`)
