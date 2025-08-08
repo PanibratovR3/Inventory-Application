@@ -3,6 +3,7 @@
     <head></head>
     <body>
         <h1><%= title %></h1>
+        <a href="/genres/create">Add new genre</a>
         <table>
             <tr>
                 <th>Id</th>
@@ -10,8 +11,10 @@
             </tr>
             <% if (locals.genres) { %>
                 <% genres.forEach((genre) => { %>
-                    <td><%= genre.id %></td>
-                    <td><%= genre.name %></td>
+                    <tr>
+                        <td><%= genre.id %></td>
+                        <td><%= genre.name %></td>
+                    </tr>
                 <% }); %>
             <% }; %>
         </table>

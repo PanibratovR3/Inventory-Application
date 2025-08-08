@@ -80,6 +80,10 @@ async function getAllGenres() {
   return rows;
 }
 
+async function createGenre(name) {
+  await pool.query("INSERT INTO genre(name) VALUES($1)", [name]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -97,4 +101,5 @@ module.exports = {
   updatePlatform,
   deletePlatform,
   getAllGenres,
+  createGenre,
 };
