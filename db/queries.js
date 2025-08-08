@@ -121,6 +121,24 @@ async function getAllGames() {
   return rows;
 }
 
+async function createGame(
+  title,
+  developerId,
+  genreId,
+  publisherId,
+  platformId,
+  dateOfRelease
+) {
+  await pool.query(
+    "INSERT INTO game(title, developerid, genreid) VALUES($1, $2, $3);",
+    [title, developerId, genreId]
+  );
+  await pool.query(
+    "INSERT INTO game_publisher_platform(gameid, publisherid, platformid, dateofrelease) VALUES(lastval(),$1, $2, $3);",
+    [publisherId, platformId, dateOfRelease]
+  );
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -143,4 +161,5 @@ module.exports = {
   updateGenre,
   deleteGenre,
   getAllGames,
+  createGame,
 };

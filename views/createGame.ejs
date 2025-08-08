@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h1><%= title %></h1>
+        <ul>
+            <% if (locals.errors) { %>
+                <% errors.forEach((error) => { %>
+                    <li>
+                        <%= error.msg %>
+                    </li>
+                <% }); %>
+            <% }; %>
+        </ul>
+        <form action="/create" method="POST">
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" name="gameTitle" id="title" required maxlength="50" />
+            </div>
+            <div>
+                <label for="developer">Developer:</label>
+                <select name="developer" id="developer">
+                    <option value="">Empty</option>
+                    <% if (locals.developers) { %>
+                        <% developers.forEach((developer) => { %>
+                            <option value="<%= developer.id %>"><%= developer.name %></option>
+                        <% }); %>
+                    <% }; %>
+                </select>
+            </div>            
+            <div>
+                <label for="genre">Genre:</label>
+                <select name="genre" id="genre">
+                    <option value="">Empty</option>
+                    <% if (locals.genres) { %>
+                        <% genres.forEach((genre) => { %>
+                            <option value="<%= genre.id %>"><%= genre.name %></option>
+                        <% }); %>
+                    <% }; %>
+                </select>
+            </div>
+            <div>
+                <label for="publisher">Publisher:</label>
+                <select name="publisher" id="publisher">
+                    <option value="">Empty</option>
+                    <% if (locals.publishers) { %>
+                        <% publishers.forEach((publisher) => { %>
+                            <option value="<%= publisher.id %>"><%= publisher.name %></option>
+                        <% }); %>
+                    <% }; %>
+                </select>
+            </div>
+            <div>
+                <label for="platform">Platform:</label>
+                <select name="platform" id="platform">
+                    <option value="">Empty</option>
+                    <% if (locals.platforms) { %>
+                        <% platforms.forEach((platform) => { %>
+                            <option value="<%= platform.id %>"><%= platform.name %></option>
+                        <% }); %>
+                    <% }; %>
+                </select>
+            </div>
+            <div>
+                <label for="date-of-release">Date of release:</label>
+                <input type="date" name="dateOfRelease" id="date-of-release" required />
+            </div>
+            <div>
+                <button>Add</button>
+            </div>
+        </form>
+    </body>
+</html>
