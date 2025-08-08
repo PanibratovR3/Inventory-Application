@@ -96,6 +96,10 @@ async function updateGenre(id, name) {
   await pool.query("UPDATE genre SET name = $1 WHERE id = $2", [name, id]);
 }
 
+async function deleteGenre(id) {
+  await pool.query("DELETE FROM genre WHERE id = $1", [id]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -116,4 +120,5 @@ module.exports = {
   createGenre,
   getGenreById,
   updateGenre,
+  deleteGenre,
 };

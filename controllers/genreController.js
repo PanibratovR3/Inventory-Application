@@ -71,10 +71,17 @@ const updateGenrePost = [
   },
 ];
 
+async function deleteGenrePost(request, response) {
+  const { id } = request.params;
+  await queries.deleteGenre(Number(id));
+  response.redirect("/genres");
+}
+
 module.exports = {
   showAllGenres,
   createGenreGet,
   createGenrePost,
   updateGenreGet,
   updateGenrePost,
+  deleteGenrePost,
 };
