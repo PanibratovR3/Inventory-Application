@@ -84,6 +84,18 @@ async function createGenre(name) {
   await pool.query("INSERT INTO genre(name) VALUES($1)", [name]);
 }
 
+async function getGenreById(id) {
+  const { rows } = await pool.query(
+    "SELECT id, name FROM genre WHERE id = $1;",
+    [id]
+  );
+  return rows[0];
+}
+
+async function updateGenre(id, name) {
+  await pool.query("UPDATE genre SET name = $1 WHERE id = $2", [name, id]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -102,4 +114,6 @@ module.exports = {
   deletePlatform,
   getAllGenres,
   createGenre,
+  getGenreById,
+  updateGenre,
 };

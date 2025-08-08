@@ -13,7 +13,11 @@
                 <% genres.forEach((genre) => { %>
                     <tr>
                         <td><%= genre.id %></td>
-                        <td><%= genre.name %></td>
+                        <td>
+                            <a href="/genres/<%= genre.id %>/update">
+                                <%= genre.name %>
+                            </a>
+                        </td>
                     </tr>
                 <% }); %>
             <% }; %>

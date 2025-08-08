@@ -42,8 +42,39 @@ const createGenrePost = [
   },
 ];
 
+async function updateGenreGet(request, response) {
+  const { id } = request.params;
+  const genre = await queries.getGenreById(Number(id));
+  response.render("updateGenre", {
+    title: "Update genre",
+    genre: genre,
+  });
+}
+
+const updateGenrePost = [
+  validatePlatform,
+  async (request, response) => {
+    const { id } = request.params;
+    const genre = await queries.getGenreById(Number(id));
+    const { genreName } = request.body;
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      response.render("updateGenre", {
+        title: "Update genre",
+        genre: genre,
+        errors: errors.array(),
+      });
+    } else {
+      await queries.updateGenre(id, genreName);
+      response.redirect("/genres");
+    }
+  },
+];
+
 module.exports = {
   showAllGenres,
   createGenreGet,
   createGenrePost,
+  updateGenreGet,
+  updateGenrePost,
 };
