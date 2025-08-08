@@ -5,7 +5,7 @@ const { body, validationResult } = require("express-validator");
 const titleErr = "must contain at least 3 characters.";
 const selectErr = "cannot be empty.";
 
-const validateGame = [
+const validateGameCreate = [
   body("gameTitle")
     .trim()
     .escape()
@@ -15,6 +15,14 @@ const validateGame = [
   body("developer").notEmpty().withMessage(`Developer ${selectErr}`),
   body("publisher").notEmpty().withMessage(`Publisher ${selectErr}`),
   body("platform").notEmpty().withMessage(`Platform ${selectErr}`),
+];
+
+const validateGameUpdate = [
+  body("gameTitle")
+    .trim()
+    .escape()
+    .isLength({ min: 3 })
+    .withMessage(`Title of game ${titleErr}`),
 ];
 
 async function showAllGames(request, response) {
@@ -40,7 +48,7 @@ async function createGameGet(request, response) {
 }
 
 const createGamePost = [
-  validateGame,
+  validateGameCreate,
   async (request, response) => {
     const { gameTitle, developer, genre, publisher, platform, dateOfRelease } =
       request.body;
@@ -72,8 +80,64 @@ const createGamePost = [
   },
 ];
 
+async function updateGameGet(request, response) {
+  const { id } = request.params;
+  const game = await queries.getGameById(Number(id));
+  const developers = await queries.getAllDevelopers();
+  const genres = await queries.getAllGenres();
+  const publishers = await queries.getAllPublishers();
+  const platforms = await queries.getAllPlatforms();
+  response.render("updateGame", {
+    title: "Update game",
+    game: game,
+    developers: developers,
+    genres: genres,
+    publishers: publishers,
+    platforms: platforms,
+  });
+}
+
+const updateGamePost = [
+  validateGameUpdate,
+  async (request, response) => {
+    const { id } = request.params;
+    const { gameTitle, developer, genre, publisher, platform, dateOfRelease } =
+      request.body;
+    const game = await queries.getGameById(Number(id));
+    const developers = await queries.getAllDevelopers();
+    const genres = await queries.getAllGenres();
+    const publishers = await queries.getAllPublishers();
+    const platforms = await queries.getAllPlatforms();
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      response.render("updateGame", {
+        title: "Update game",
+        game: game,
+        developers: developers,
+        genres: genres,
+        publishers: publishers,
+        platforms: platforms,
+        errors: errors.array(),
+      });
+    } else {
+      await queries.updateGame(
+        Number(id),
+        gameTitle,
+        Number(developer),
+        Number(genre),
+        Number(publisher),
+        Number(platform),
+        dateOfRelease
+      );
+      response.redirect("/");
+    }
+  },
+];
+
 module.exports = {
   showAllGames,
   createGameGet,
   createGamePost,
+  updateGameGet,
+  updateGamePost,
 };

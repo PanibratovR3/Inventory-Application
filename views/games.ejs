@@ -16,12 +16,16 @@
             <% if (locals.games) { %>
                 <% games.forEach((game) => { %>
                     <tr>
-                        <td><%= game.title %></td>
+                        <td>
+                            <a href="/<%= game.id %>/update">
+                                <%= game.title %>
+                            </a>
+                        </td>
                         <td><%= game.developername %></td>
                         <td><%= game.genrename %></td>
                         <td><%= game.publishername %></td>
                         <td><%= game.platformname %></td>
-                        <td><%= game.dateofrelease.getFullYear() %>-<%= game.dateofrelease.getMonth()+1 %>-<%= game.dateofrelease.getDate() %></td>
+                        <td><%= game.dateofrelease.toISOString().split('T')[0] %></td>
                     </tr>
                 <% }); %>
             <% }; %>

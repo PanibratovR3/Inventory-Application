@@ -139,6 +139,51 @@ async function createGame(
   );
 }
 
+async function getGameById(id) {
+  const SQL = `
+    SELECT 
+        game.id, 
+        game.title,
+        developer.id AS developerid, 
+        developer.name AS developername,
+        genre.id AS genreid, 
+        genre.name AS genrename,
+        publisher.id AS publisherid,
+        publisher.name AS publishername,
+        platform.id AS platformid,
+        platform.name AS platformname,
+        game_publisher_platform.dateofrelease
+        FROM game
+            INNER JOIN developer ON game.developerid = developer.id
+            INNER JOIN genre ON game.genreid = genre.id
+            INNER JOIN game_publisher_platform ON game.id = game_publisher_platform.gameid
+            INNER JOIN publisher ON game_publisher_platform.publisherid = publisher.id
+            INNER JOIN platform ON game_publisher_platform.platformid = platform.id
+        WHERE game.id = $1;  
+  `;
+  const { rows } = await pool.query(SQL, [id]);
+  return rows[0];
+}
+
+async function updateGame(
+  id,
+  title,
+  developerId,
+  genreId,
+  publisherId,
+  platformId,
+  dateOfRelease
+) {
+  await pool.query(
+    "UPDATE game SET title = $1, developerid = $2, genreid = $3 WHERE id = $4;",
+    [title, developerId, genreId, id]
+  );
+  await pool.query(
+    "UPDATE game_publisher_platform SET publisherid = $1, platformid = $2, dateofrelease = $3 WHERE gameid = $4;",
+    [publisherId, platformId, dateOfRelease, id]
+  );
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -162,4 +207,6 @@ module.exports = {
   deleteGenre,
   getAllGames,
   createGame,
+  getGameById,
+  updateGame,
 };
