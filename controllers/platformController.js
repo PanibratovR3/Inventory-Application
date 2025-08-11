@@ -73,8 +73,22 @@ const updatePlatformPost = [
 
 async function deletePlatformPost(request, response) {
   const { id } = request.params;
-  await queries.deletePlatform(Number(id));
-  response.redirect("/platforms");
+  const gamesWithThisPlatform = await queries.findPlatformFromGames(Number(id));
+  if (gamesWithThisPlatform.length === 0) {
+    await queries.deletePlatform(Number(id));
+    response.redirect("/platforms");
+  } else {
+    const platforms = await queries.getAllPlatforms();
+    response.render("platforms", {
+      title: "List of platforms",
+      platforms: platforms,
+      errors: [
+        {
+          msg: "Cannot delete this platform, because games contain information about this platform.",
+        },
+      ],
+    });
+  }
 }
 
 module.exports = {

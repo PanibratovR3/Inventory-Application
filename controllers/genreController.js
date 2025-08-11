@@ -73,8 +73,22 @@ const updateGenrePost = [
 
 async function deleteGenrePost(request, response) {
   const { id } = request.params;
-  await queries.deleteGenre(Number(id));
-  response.redirect("/genres");
+  const gamesWithThisGenre = await queries.findGenresFromGames(Number(id));
+  if (gamesWithThisGenre.length === 0) {
+    await queries.deleteGenre(Number(id));
+    response.redirect("/genres");
+  } else {
+    const genres = await queries.getAllGenres();
+    response.render("genres", {
+      title: "List of all genres",
+      genres: genres,
+      errors: [
+        {
+          msg: "Cannot delete genre, because games contain information about this genre.",
+        },
+      ],
+    });
+  }
 }
 
 module.exports = {

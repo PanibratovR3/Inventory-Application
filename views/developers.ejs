@@ -9,6 +9,13 @@
             <%- include("subviews/navigation") %>
             <div>
                 <a href="/developers/create">Add new developer</a>
+                <ul>
+                    <% if (locals.errors) { %>
+                        <% errors.forEach((error) => { %>
+                            <li><%= error.msg %></li>
+                        <% }); %>
+                    <% }; %>
+                </ul>
                 <table>
                     <tr>
                         <th>Id</th>

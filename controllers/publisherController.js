@@ -74,8 +74,24 @@ const updatePublisherPost = [
 
 async function deletePublisherPost(request, response) {
   const { id } = request.params;
-  await queries.deletePublisher(Number(id));
-  response.redirect("/publishers");
+  const gamesWithThisPublisher = await queries.findPublisherFromGames(
+    Number(id)
+  );
+  if (gamesWithThisPublisher.length === 0) {
+    await queries.deletePublisher(Number(id));
+    response.redirect("/publishers");
+  } else {
+    const publishers = await queries.getAllPublishers();
+    response.render("publishers", {
+      title: "List of all publishers",
+      publishers: publishers,
+      errors: [
+        {
+          msg: "Cannot delete publisher, because games contain information about this publisher.",
+        },
+      ],
+    });
+  }
 }
 
 module.exports = {

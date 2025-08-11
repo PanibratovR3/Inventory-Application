@@ -233,6 +233,38 @@ SELECT
   return rows;
 }
 
+async function findDeveloperFromGames(developerId) {
+  const { rows } = await pool.query(
+    "SELECT * FROM game WHERE game.developerid = $1",
+    [developerId]
+  );
+  return rows;
+}
+
+async function findGenresFromGames(genreId) {
+  const { rows } = await pool.query(
+    "SELECT * FROM game WHERE game.genreid = $1",
+    [genreId]
+  );
+  return rows;
+}
+
+async function findPublisherFromGames(publisherId) {
+  const { rows } = await pool.query(
+    "SELECT * FROM game_publisher_platform WHERE game_publisher_platform.publisherid = $1",
+    [publisherId]
+  );
+  return rows;
+}
+
+async function findPlatformFromGames(platformId) {
+  const { rows } = await pool.query(
+    "SELECT * FROM game_publisher_platform WHERE game_publisher_platform.platformid = $1",
+    [platformId]
+  );
+  return rows;
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -260,4 +292,8 @@ module.exports = {
   updateGame,
   deleteGame,
   searchGames,
+  findDeveloperFromGames,
+  findGenresFromGames,
+  findPublisherFromGames,
+  findPlatformFromGames,
 };

@@ -74,8 +74,24 @@ const updateDeveloperPost = [
 
 async function deleteDeveloperPost(request, response) {
   const { id } = request.params;
-  await queries.deleteDeveloper(Number(id));
-  response.redirect("/developers");
+  const gamesWithThisDeveloper = await queries.findDeveloperFromGames(
+    Number(id)
+  );
+  if (gamesWithThisDeveloper.length === 0) {
+    await queries.deleteDeveloper(Number(id));
+    response.redirect("/developers");
+  } else {
+    const developers = await queries.getAllDevelopers();
+    response.render("developers", {
+      title: "List of all developers",
+      developers: developers,
+      errors: [
+        {
+          msg: "Cannot delete developer, because games contain information about this developer.",
+        },
+      ],
+    });
+  }
 }
 
 module.exports = {
