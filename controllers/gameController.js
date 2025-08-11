@@ -27,9 +27,17 @@ const validateGameUpdate = [
 
 async function showAllGames(request, response) {
   const games = await queries.getAllGames();
+  const developers = await queries.getAllDevelopers();
+  const genres = await queries.getAllGenres();
+  const publishers = await queries.getAllPublishers();
+  const platforms = await queries.getAllPlatforms();
   response.render("games", {
     title: "List of all games",
     games: games,
+    developers: developers,
+    genres: genres,
+    publishers: publishers,
+    platforms: platforms,
   });
 }
 
@@ -40,6 +48,42 @@ async function createGameGet(request, response) {
   const platforms = await queries.getAllPlatforms();
   response.render("createGame", {
     title: "Add new game",
+    developers: developers,
+    genres: genres,
+    publishers: publishers,
+    platforms: platforms,
+  });
+}
+
+async function searchGamesGet(request, response) {
+  let {
+    searchName,
+    searchDeveloper,
+    searchGenre,
+    searchPublisher,
+    searchPlatform,
+  } = request.query;
+  searchName = searchName.length === 0 ? null : searchName;
+  searchDeveloper =
+    Number(searchDeveloper) === 0 ? null : Number(searchDeveloper);
+  searchGenre = Number(searchGenre) === 0 ? null : Number(searchGenre);
+  searchPublisher =
+    Number(searchPublisher) === 0 ? null : Number(searchPublisher);
+  searchPlatform = Number(searchPlatform) === 0 ? null : Number(searchPlatform);
+  const searchGames = await queries.searchGames(
+    searchName,
+    searchDeveloper,
+    searchGenre,
+    searchPublisher,
+    searchPlatform
+  );
+  const developers = await queries.getAllDevelopers();
+  const genres = await queries.getAllGenres();
+  const publishers = await queries.getAllPublishers();
+  const platforms = await queries.getAllPlatforms();
+  response.render("games", {
+    title: "List of all games",
+    games: searchGames,
     developers: developers,
     genres: genres,
     publishers: publishers,
@@ -142,6 +186,7 @@ async function deleteGamePost(request, response) {
 
 module.exports = {
   showAllGames,
+  searchGamesGet,
   createGameGet,
   createGamePost,
   updateGameGet,

@@ -191,6 +191,48 @@ async function deleteGame(id) {
   await pool.query("DELETE FROM game WHERE id = $1", [id]);
 }
 
+async function searchGames(
+  name,
+  developerId,
+  genreId,
+  publisherId,
+  platformId
+) {
+  const SQL = `
+SELECT 
+    game.id, 
+    game.title,
+    developer.id AS developerid, 
+    developer.name AS developername,
+    genre.id AS genreid, 
+    genre.name AS genrename,
+    publisher.id AS publisherid,
+    publisher.name AS publishername,
+    platform.id AS platformid,
+    platform.name AS platformname,
+    game_publisher_platform.dateofrelease
+    FROM game
+        INNER JOIN developer ON game.developerid = developer.id
+        INNER JOIN genre ON game.genreid = genre.id
+        INNER JOIN game_publisher_platform ON game.id = game_publisher_platform.gameid
+        INNER JOIN publisher ON game_publisher_platform.publisherid = publisher.id
+        INNER JOIN platform ON game_publisher_platform.platformid = platform.id
+    WHERE game.title LIKE $1
+        OR developerid = $2
+        OR genreid = $3
+        OR publisherid = $4
+        OR platformid = $5;
+  `;
+  const { rows } = await pool.query(SQL, [
+    `%${name}%`,
+    developerId,
+    genreId,
+    publisherId,
+    platformId,
+  ]);
+  return rows;
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -217,4 +259,5 @@ module.exports = {
   getGameById,
   updateGame,
   deleteGame,
+  searchGames,
 };

@@ -9,6 +9,55 @@
             <%- include("subviews/navigation") %>
             <div class="menu">
                 <a href="/create">Add new game</a>
+                <div>
+                    <form action="/search" method="GET">
+                        <div>
+                            <label for="name">Name of game:</label>
+                            <input type="text" id="name" name="searchName" />
+                            <label for="developer">Developer:</label>
+                            <select name="searchDeveloper" id="developer">
+                                <option value="">Empty</option>
+                                <% if (locals.developers) { %>
+                                    <% developers.forEach((developer) => { %>
+                                        <option value="<%= developer.id %>"><%= developer.name %></option>
+                                    <% }); %>
+                                <% }; %>
+                            </select>
+                            <label for="genre">Genre:</label>
+                            <select name="searchGenre" id="genre">
+                                <option value="">Empty</option>
+                                <% if (locals.genres) { %>
+                                    <% genres.forEach((genre) => { %>
+                                        <option value="<%= genre.id %>"><%= genre.name %></option>
+                                    <% }); %>
+                                <% }; %>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="publisher">Publisher:</label>
+                                <select name="searchPublisher" id="publisher">
+                                    <option value="">Empty</option>
+                                    <% if (locals.publishers) { %>
+                                        <% publishers.forEach((publisher) => { %>
+                                            <option value="<%= publisher.id %>"><%= publisher.name %></option>
+                                        <% }); %>
+                                    <% }; %>
+                                </select>
+                                <label for="platform">Platform:</label>
+                                <select name="searchPlatform" id="platform">
+                                    <option value="">Empty</option>
+                                    <% if (locals.platforms) { %>
+                                        <% platforms.forEach((platform) => { %>
+                                            <option value="<%= platform.id %>"><%= platform.name %></option>
+                                        <% }); %>
+                                    <% } %>
+                                </select>
+                        </div>
+                        <div>
+                            <button type="submit">Search games</button>
+                        </div>
+                    </form>
+                </div>
                 <table>
                     <tr>
                         <th>Title</th>
