@@ -134,10 +134,17 @@ const updateGamePost = [
   },
 ];
 
+async function deleteGamePost(request, response) {
+  const { id } = request.params;
+  await queries.deleteGame(Number(id));
+  response.redirect("/");
+}
+
 module.exports = {
   showAllGames,
   createGameGet,
   createGamePost,
   updateGameGet,
   updateGamePost,
+  deleteGamePost,
 };

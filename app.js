@@ -18,6 +18,10 @@ app.use("/platforms", platformRouter);
 app.use("/genres", genreRouter);
 app.use("/", gameRouter);
 
+app.use((error, request, response, next) => {
+  console.error(error.name, " : ", error.message);
+});
+
 app.listen(PORT, () =>
   console.log(`Server was laucnhed: http://localhost:${PORT}/`)
 );

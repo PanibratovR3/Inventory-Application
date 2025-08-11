@@ -184,6 +184,13 @@ async function updateGame(
   );
 }
 
+async function deleteGame(id) {
+  await pool.query("DELETE FROM game_publisher_platform WHERE gameid = $1", [
+    id,
+  ]);
+  await pool.query("DELETE FROM game WHERE id = $1", [id]);
+}
+
 module.exports = {
   getAllDevelopers,
   createDeveloper,
@@ -209,4 +216,5 @@ module.exports = {
   createGame,
   getGameById,
   updateGame,
+  deleteGame,
 };
