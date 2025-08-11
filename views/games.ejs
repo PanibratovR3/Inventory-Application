@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <link rel="stylesheet" href="/style.css">
+    </head>
     <body>
         <h1><%= title %></h1>
-        <a href="/create">Add new game</a>
-        <table>
-            <tr>
-                <th>Title</th>
-                <th>Developer</th>
-                <th>Genre</th>
-                <th>Publisher</th>
-                <th>Platform</th>
-                <th>Date of release</th>
-            </tr>
-            <% if (locals.games) { %>
-                <% games.forEach((game) => { %>
+        <div class="main">
+            <%- include("subviews/navigation") %>
+            <div class="menu">
+                <a href="/create">Add new game</a>
+                <table>
                     <tr>
-                        <td>
-                            <a href="/<%= game.id %>/update">
-                                <%= game.title %>
-                            </a>
-                        </td>
-                        <td><%= game.developername %></td>
-                        <td><%= game.genrename %></td>
-                        <td><%= game.publishername %></td>
-                        <td><%= game.platformname %></td>
-                        <td><%= game.dateofrelease.toLocaleDateString('ja-JP') %></td>
-                        <td>
-                            <form action="/<%= game.id %>/delete" method="POST">
-                                <button type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
-                            </form>
-                        </td>
+                        <th>Title</th>
+                        <th>Developer</th>
+                        <th>Genre</th>
+                        <th>Publisher</th>
+                        <th>Platform</th>
+                        <th>Date of release</th>
                     </tr>
-                <% }); %>
-            <% }; %>
-        </table>
+                    <% if (locals.games) { %>
+                        <% games.forEach((game) => { %>
+                            <tr>
+                                <td>
+                                    <a href="/<%= game.id %>/update">
+                                        <%= game.title %>
+                                    </a>
+                                </td>
+                                <td><%= game.developername %></td>
+                                <td><%= game.genrename %></td>
+                                <td><%= game.publishername %></td>
+                                <td><%= game.platformname %></td>
+                                <td><%= game.dateofrelease.toLocaleDateString('ja-JP') %></td>
+                                <td>
+                                    <form action="/<%= game.id %>/delete" method="POST">
+                                        <button type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    <% }; %>
+                </table>
+            </div>
+        </div>
     </body>
 </html>

@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+
+.navigation li {
+    font-size: 2rem;
+    margin: 30px 0;
+}
+
+table {
+    border: 1px solid black;
+}
+
+th, td {
+    border: 1px solid black;
+    border-collapse: separate;
+    padding: 20px;
+}

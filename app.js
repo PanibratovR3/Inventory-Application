@@ -7,9 +7,11 @@ const genreRouter = require("./routes/genreRouter");
 const gameRouter = require("./routes/gameRouter");
 
 const app = express();
+const assetsPath = path.join(__dirname, "public");
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(assetsPath));
 const PORT = 3000;
 
 app.use("/developers", developerRouter);
@@ -19,6 +21,7 @@ app.use("/genres", genreRouter);
 app.use("/", gameRouter);
 
 app.use((error, request, response, next) => {
+  console.error("ERROR!");
   console.error(error.name, " : ", error.message);
 });
 
