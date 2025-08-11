@@ -69,7 +69,7 @@
             </div>
             <div>
                 <label for="date-of-release">Date of release:</label>
-                <input type="date" name="dateOfRelease" id="date-of-release" value="<%= game.dateofrelease.toISOString().split('T')[0] %>" require />
+                <input type="date" name="dateOfRelease" id="date-of-release" value="<%= game.dateofrelease.toLocaleDateString("en-CA")%>" require />
             </div>
             <div>
                 <button type="submit">Update</button>

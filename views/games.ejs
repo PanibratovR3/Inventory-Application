@@ -25,7 +25,7 @@
                         <td><%= game.genrename %></td>
                         <td><%= game.publishername %></td>
                         <td><%= game.platformname %></td>
-                        <td><%= game.dateofrelease.toISOString().split('T')[0] %></td>
+                        <td><%= game.dateofrelease.toLocaleDateString('ja-JP') %></td>
                     </tr>
                 <% }); %>
             <% }; %>
