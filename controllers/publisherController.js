@@ -7,7 +7,6 @@ const publisherErr = "must contain at least 3 symbols.";
 const validatePublisher = [
   body("publisherName")
     .trim()
-    .escape()
     .isLength({ min: 3 })
     .withMessage(`Name of publisher ${publisherErr}`),
 ];

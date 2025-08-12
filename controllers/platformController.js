@@ -6,7 +6,6 @@ const platformNameErr = "must contain at least 2 symbols.";
 const validatePlatform = [
   body("platformName")
     .trim()
-    .escape()
     .isLength({ min: 2 })
     .withMessage(`Name of platform ${platformNameErr}`),
 ];

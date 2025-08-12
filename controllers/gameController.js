@@ -8,7 +8,6 @@ const selectErr = "cannot be empty.";
 const validateGameCreate = [
   body("gameTitle")
     .trim()
-    .escape()
     .isLength({ min: 3 })
     .withMessage(`Title of game ${titleErr}`),
   body("genre").notEmpty().withMessage(`Genre ${selectErr}`),
@@ -20,7 +19,6 @@ const validateGameCreate = [
 const validateGameUpdate = [
   body("gameTitle")
     .trim()
-    .escape()
     .isLength({ min: 3 })
     .withMessage(`Title of game ${titleErr}`),
 ];

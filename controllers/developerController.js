@@ -7,7 +7,6 @@ const developerNameErr = "must contain at least 3 symbols";
 const validateDeveloper = [
   body("developerName")
     .trim()
-    .escape()
     .isLength({ min: 3 })
     .withMessage(`Name of developer ${developerNameErr}`),
 ];

@@ -6,7 +6,6 @@ const genreNameErr = "must contain at least 3 characters.";
 const validatePlatform = [
   body("genreName")
     .trim()
-    .escape()
     .isLength({ min: 3 })
     .withMessage(`Name of genre ${genreNameErr}`),
 ];
