@@ -17,11 +17,11 @@
                     <% } %>
                 </ul>
                 <form action="/developers/<%= developer.id %>/update" method="POST">
-                    <div class="create-form-row">
+                    <div class="update-form-row">
                         <label for="name">Name:</label>
                         <input type="text" name="developerName" id="name" value="<%= developer.name %>" required />
                     </div>
-                    <div class="create-form-row">
+                    <div class="update-form-row">
                         <button type="submit" class="update-button">Update</button>
                     </div>
                 </form>
