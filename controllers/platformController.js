@@ -2,12 +2,20 @@ const queries = require("../db/queries");
 const { body, validationResult } = require("express-validator");
 
 const platformNameErr = "must contain at least 2 symbols.";
+const platformOpenScriptErr = "must not contain open script tag.";
+const platformCloseScriptErr = "must not containe close script tag.";
 
 const validatePlatform = [
   body("platformName")
     .trim()
     .isLength({ min: 2 })
-    .withMessage(`Name of platform ${platformNameErr}`),
+    .withMessage(`Name of platform ${platformNameErr}`)
+    .not()
+    .contains("<script>")
+    .withMessage(`Name of platform ${platformOpenScriptErr}`)
+    .not()
+    .contains("</script>")
+    .withMessage(`Name of platform ${platformCloseScriptErr}`),
 ];
 
 async function showAllPlatforms(request, response) {

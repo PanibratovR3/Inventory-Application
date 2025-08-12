@@ -3,12 +3,20 @@ const queries = require("../db/queries");
 const { body, validationResult } = require("express-validator");
 
 const publisherErr = "must contain at least 3 symbols.";
+const publisherOpenScriptErr = "must not contain open script tag.";
+const publisherCloseScriptErr = "must not contain close script tag.";
 
 const validatePublisher = [
   body("publisherName")
     .trim()
     .isLength({ min: 3 })
-    .withMessage(`Name of publisher ${publisherErr}`),
+    .withMessage(`Name of publisher ${publisherErr}`)
+    .not()
+    .contains("<script>")
+    .withMessage(`Name of publisher ${publisherOpenScriptErr}`)
+    .not()
+    .contains("</script>")
+    .withMessage(`Name of publisher ${publisherCloseScriptErr}`),
 ];
 
 async function showAllPublishers(request, response) {

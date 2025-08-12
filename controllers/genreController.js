@@ -2,12 +2,20 @@ const queries = require("../db/queries");
 const { body, validationResult } = require("express-validator");
 
 const genreNameErr = "must contain at least 3 characters.";
+const genreOpenScriptErr = "must not contain open script tag.";
+const genreCloseScritpErr = "must no contain closed script tag.";
 
 const validatePlatform = [
   body("genreName")
     .trim()
     .isLength({ min: 3 })
-    .withMessage(`Name of genre ${genreNameErr}`),
+    .withMessage(`Name of genre ${genreNameErr}`)
+    .not()
+    .contains("<script>")
+    .withMessage(`Name of genre ${genreOpenScriptErr}`)
+    .not()
+    .contains("</script>")
+    .withMessage(`Name of genre ${genreCloseScritpErr}`),
 ];
 
 async function showAllGenres(request, response) {

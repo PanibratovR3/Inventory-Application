@@ -4,12 +4,20 @@ const { body, validationResult } = require("express-validator");
 
 const titleErr = "must contain at least 3 characters.";
 const selectErr = "cannot be empty.";
+const titleOpenScriptErr = "must not contain open script tag.";
+const titleCloseScriptErr = "must not contain close script tag.";
 
 const validateGameCreate = [
   body("gameTitle")
     .trim()
     .isLength({ min: 3 })
-    .withMessage(`Title of game ${titleErr}`),
+    .withMessage(`Title of game ${titleErr}`)
+    .not()
+    .contains("<script>")
+    .withMessage(`Name of game ${titleOpenScriptErr}`)
+    .not()
+    .contains("</script>")
+    .withMessage(`Name of developer ${titleCloseScriptErr}`),
   body("genre").notEmpty().withMessage(`Genre ${selectErr}`),
   body("developer").notEmpty().withMessage(`Developer ${selectErr}`),
   body("publisher").notEmpty().withMessage(`Publisher ${selectErr}`),

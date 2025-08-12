@@ -3,12 +3,20 @@ const queries = require("../db/queries");
 const { body, validationResult } = require("express-validator");
 
 const developerNameErr = "must contain at least 3 symbols";
+const developerNameOpenScriptErr = "must not contain open script tag.";
+const developerNameCloseScriptErr = "must not contain close script tag.";
 
 const validateDeveloper = [
   body("developerName")
     .trim()
     .isLength({ min: 3 })
-    .withMessage(`Name of developer ${developerNameErr}`),
+    .withMessage(`Name of developer ${developerNameErr}`)
+    .not()
+    .contains("<script>")
+    .withMessage(`Name of developer ${developerNameOpenScriptErr}`)
+    .not()
+    .contains("</script>")
+    .withMessage(`Name of developer ${developerNameCloseScriptErr}`),
 ];
 
 async function showAllDevelopers(request, response) {
