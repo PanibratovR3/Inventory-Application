@@ -4,14 +4,17 @@
         <link rel="stylesheet" href="/style.css">
     </head>
     <body>
-        <h1><%= title %></h1>
+        <%- include("subviews/header") %>
         <div class="main">
             <%- include("subviews/navigation") %>
             <div class="menu">
-                <a href="/create">Add new game</a>
+                <div class="subheader"><%= title %></div>
+                <div class="add-container">
+                    <a href="/create">Add new game</a>
+                </div>                
                 <div>
                     <form action="/search" method="GET">
-                        <div>
+                        <div class="search-form-row">
                             <label for="name">Name of game:</label>
                             <input type="text" id="name" name="searchName" />
                             <label for="developer">Developer:</label>
@@ -33,7 +36,7 @@
                                 <% }; %>
                             </select>
                         </div>
-                        <div>
+                        <div class="search-form-row">
                             <label for="publisher">Publisher:</label>
                                 <select name="searchPublisher" id="publisher">
                                     <option value="">Empty</option>
@@ -53,8 +56,8 @@
                                     <% } %>
                                 </select>
                         </div>
-                        <div>
-                            <button type="submit">Search games</button>
+                        <div class="search-form-row">
+                            <button type="submit" class="search-button">Search games</button>
                         </div>
                     </form>
                 </div>
@@ -82,7 +85,7 @@
                                 <td><%= game.dateofrelease.toLocaleDateString('ja-JP') %></td>
                                 <td>
                                     <form action="/<%= game.id %>/delete" method="POST">
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                        <button type="submit" onclick="return confirm('Are you sure you want to delete?')" class="delete-button">Delete</button>
                                     </form>
                                 </td>
                             </tr>

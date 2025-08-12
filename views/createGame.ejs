@@ -4,25 +4,26 @@
         <link rel="stylesheet" href="/style.css" />
     </head>
     <body>
-        <h1><%= title %></h1>
+        <%- include("subviews/header") %>
         <div class="main">
             <%- include('subviews/navigation') %>
             <div>
+            <div class="subheader"><%= title %></div>                
                 <ul>
                     <% if (locals.errors) { %>
                         <% errors.forEach((error) => { %>
-                            <li>
-                                <%= error.msg %>
+                            <li class="error">
+                                Error: <%= error.msg %>
                             </li>
                         <% }); %>
                     <% }; %>
                 </ul>
                 <form action="/create" method="POST">
-                    <div>
-                        <label for="title">Title:</label>
-                        <input type="text" name="gameTitle" id="title" required maxlength="50" />
+                    <div class="create-form-row">
+                        <div class="create-label"><label for="title">Title:</label></div>
+                        <div class="create-input"><input type="text" name="gameTitle" id="title" required maxlength="50" /></div>
                     </div>
-                    <div>
+                    <div class="create-form-row">
                         <label for="developer">Developer:</label>
                         <select name="developer" id="developer">
                             <option value="">Empty</option>
@@ -33,7 +34,7 @@
                             <% }; %>
                         </select>
                     </div>            
-                    <div>
+                    <div class="create-form-row">
                         <label for="genre">Genre:</label>
                         <select name="genre" id="genre">
                             <option value="">Empty</option>
@@ -44,7 +45,7 @@
                             <% }; %>
                         </select>
                     </div>
-                    <div>
+                    <div class="create-form-row">
                         <label for="publisher">Publisher:</label>
                         <select name="publisher" id="publisher">
                             <option value="">Empty</option>
@@ -55,7 +56,7 @@
                             <% }; %>
                         </select>
                     </div>
-                    <div>
+                    <div class="create-form-row">
                         <label for="platform">Platform:</label>
                         <select name="platform" id="platform">
                             <option value="">Empty</option>
@@ -66,12 +67,12 @@
                             <% }; %>
                         </select>
                     </div>
-                    <div>
+                    <div class="create-form-row">
                         <label for="date-of-release">Date of release:</label>
                         <input type="date" name="dateOfRelease" id="date-of-release" required />
                     </div>
-                    <div>
-                        <button>Add</button>
+                    <div class="create-form-row">
+                        <button class="add-button">Add</button>
                     </div>
                 </form>  
             </div>

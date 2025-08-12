@@ -4,23 +4,24 @@
         <link rel="stylesheet" href="/style.css">
     </head>
     <body>
-        <h1><%= title %></h1>
+        <%- include("subviews/header") %>
         <div class="main">
             <%- include("subviews/navigation") %>
             <div>
+                <div class="subheader"><%= title %></div>
                 <ul>
                     <% if (locals.errors) { %>
                         <% errors.forEach((error) => { %>
-                            <li><%= error.msg %></li>
+                            <li class="error"><%= error.msg %></li>
                         <% }); %>
                     <% }; %>
                 </ul>
                 <form action="/<%= game.id %>/update" method="POST">
-                    <div>
+                    <div class="create-form-row">
                         <label for="title">Title:</label>
                         <input type="text" name="gameTitle" id="title" value="<%= game.title %>" required />
                     </div>
-                    <div>
+                    <div class="create-form-row">
                         <label for="developer">Developer:</label>
                         <select name="developer" id="developer">
                             <option value="<%= game.developerid %>"><%= game.developername %></option>
@@ -33,7 +34,7 @@
                             <% }; %>
                         </select>
                     </div>
-                    <div>
+                    <div class="create-form-row">
                         <label for="genre">Genre:</label>
                         <select name="genre" id="genre">
                             <option value="<%= game.genreid %>"><%= game.genrename %></option>
@@ -46,7 +47,7 @@
                             <% }; %>
                         </select>
                     </div>
-                    <div>
+                    <div class="create-form-row">
                         <label for="publisher">Publisher:</label>
                         <select name="publisher" id="publisher">
                             <option value="<%= game.publisherid %>"><%= game.publishername %></option>
@@ -59,7 +60,7 @@
                             <% }; %>
                         </select>
                     </div>
-                    <div>
+                    <div class="create-form-row">
                         <label for="platform">Platform:</label>
                         <select name="platform" id="platform">
                             <option value="<%= game.platformid %>"><%= game.platformname %></option>
@@ -72,12 +73,12 @@
                             <% }; %>
                         </select>
                     </div>
-                    <div>
+                    <div class="create-form-row">
                         <label for="date-of-release">Date of release:</label>
                         <input type="date" name="dateOfRelease" id="date-of-release" value="<%= game.dateofrelease.toLocaleDateString("en-CA")%>" require />
                     </div>
-                    <div>
-                        <button type="submit">Update</button>
+                    <div class="create-form-row">
+                        <button type="submit" class="update-button">Update</button>
                     </div>
                 </form>
             </div>
