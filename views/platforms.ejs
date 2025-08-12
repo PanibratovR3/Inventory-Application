@@ -21,13 +21,11 @@
                 </ul>
                 <table>
                     <tr>
-                        <th>Id</th>
                         <th>Name</th>
                     </tr>
                     <% if (locals.platforms) { %>
                         <% platforms.forEach((platform) => { %>
                             <tr>
-                                <td><%= platform.id %></td>
                                 <td>
                                     <a href="/platforms/<%= platform.id %>/update">
                                         <%= platform.name %>
