@@ -64,6 +64,7 @@ a:hover {
 
 label {
     font-style: italic;
+    font-size: 1rem;
 }
 
 .search-button {
