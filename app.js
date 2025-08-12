@@ -27,5 +27,5 @@ app.use((error, request, response, next) => {
 });
 
 app.listen(PORT, () =>
-  console.log(`Server was laucnhed: http://localhost:${PORT}/`)
+  console.log(`Server was launched: http://localhost:${PORT}/`)
 );
