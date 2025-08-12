@@ -110,8 +110,8 @@ label {
     font-weight: bold;
 }
 
-input, select {
-    max-width: 50vw;
+input {
+    min-width: 20vw;
 }
 
 .add-button, .update-button {

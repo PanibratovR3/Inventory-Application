@@ -4,21 +4,26 @@
         <link rel="stylesheet" href="/style.css" />
     </head>
     <body>
-        <h1><%= title %></h1>
+        <%- include("subviews/header") %>
         <div class="main">
             <%- include("subviews/navigation") %>
             <div>
+                <div class="subheader"><%= title %></div>
                 <ul>
                     <% if (locals.errors) { %>
                         <% errors.forEach((error) => { %>
-                            <li><%= error.msg %></li>
+                            <li class="error"><%= error.msg %></li>
                         <% }) %>
                     <% }; %>
                 </ul>
                 <form action="/genres/create" method="POST">
-                    <label for="name">Name:</label>
-                    <input type="text" name="genreName" id="name" required />
-                    <button type="submit">Add</button>
+                    <div class="create-form-row">
+                        <label for="name">Name:</label>
+                        <input type="text" name="genreName" id="name" required />
+                    </div>
+                    <div class="create-form-row">
+                        <button type="submit" class="add-button">Add</button>
+                    </div>
                 </form>
             </div>
         </div>
