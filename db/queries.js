@@ -1,7 +1,7 @@
 const pool = require("./pool");
 
 async function getAllDevelopers() {
-  const { rows } = await pool.query("SELECT * FROM developer");
+  const { rows } = await pool.query("SELECT * FROM developer ORDER BY name");
   return rows;
 }
 
@@ -26,7 +26,7 @@ async function deleteDeveloper(id) {
 }
 
 async function getAllPublishers() {
-  const { rows } = await pool.query("SELECT * FROM publisher");
+  const { rows } = await pool.query("SELECT * FROM publisher ORDER BY name");
   return rows;
 }
 
@@ -51,7 +51,7 @@ async function deletePublisher(id) {
 }
 
 async function getAllPlatforms() {
-  const { rows } = await pool.query("SELECT * FROM platform");
+  const { rows } = await pool.query("SELECT * FROM platform ORDER BY name");
   return rows;
 }
 
@@ -76,7 +76,7 @@ async function deletePlatform(id) {
 }
 
 async function getAllGenres() {
-  const { rows } = await pool.query("SELECT * FROM genre");
+  const { rows } = await pool.query("SELECT * FROM genre ORDER BY name;");
   return rows;
 }
 
@@ -115,7 +115,10 @@ async function getAllGames() {
             INNER JOIN genre ON game.genreid = genre.id
             INNER JOIN game_publisher_platform ON game.id = game_publisher_platform.gameid
             INNER JOIN publisher ON game_publisher_platform.publisherid = publisher.id
-            INNER JOIN platform ON game_publisher_platform.platformid = platform.id;  
+            INNER JOIN platform ON game_publisher_platform.platformid = platform.id
+        ORDER BY
+          game.title,
+          game_publisher_platform.dateofrelease;  
   `;
   const { rows } = await pool.query(SQL);
   return rows;
