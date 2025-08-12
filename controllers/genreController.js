@@ -3,7 +3,7 @@ const { body, validationResult } = require("express-validator");
 
 const genreNameErr = "must contain at least 3 characters.";
 const genreOpenScriptErr = "must not contain open script tag.";
-const genreCloseScritpErr = "must no contain closed script tag.";
+const genreCloseScritpErr = "must not contain closed script tag.";
 
 const validatePlatform = [
   body("genreName")
