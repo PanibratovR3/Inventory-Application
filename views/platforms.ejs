@@ -4,15 +4,18 @@
         <link rel="stylesheet" href="/style.css" />
     </head>
     <body>
-        <h1><%= title %></h1>
+        <%- include("subviews/header") %>
         <div class="main">
             <%- include("subviews/navigation") %>
             <div>
-                <a href="/platforms/create">Add new platform</a>
+                <div class="subheader"><%= title %></div>
+                <div class="add-container">
+                    <a href="/platforms/create">Add new platform</a>
+                </div>
                 <ul>
                     <% if (locals.errors) { %>
                         <% errors.forEach((error) => { %>
-                            <li><%= error.msg %></li>
+                            <li class="error"><%= error.msg %></li>
                         <% }); %>
                     <% }; %>
                 </ul>
@@ -32,7 +35,7 @@
                                 </td>
                                 <td>
                                     <form action="/platforms/<%= platform.id %>/delete" method="POST">
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                        <button type="submit" onclick="return confirm('Are you sure you want to delete?')" class="delete-button">Delete</button>
                                     </form>
                                 </td>
                             </tr>

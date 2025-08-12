@@ -99,6 +99,7 @@ label {
 
 .create-form-row input {
     max-height: 25px;
+    min-width: 20vw;
 }
 
 .error {
@@ -108,10 +109,6 @@ label {
     padding: 5px 0;
     list-style-type: none;
     font-weight: bold;
-}
-
-input {
-    min-width: 20vw;
 }
 
 .add-button, .update-button {
