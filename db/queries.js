@@ -25,6 +25,21 @@ async function deleteDeveloper(id) {
   await pool.query("DELETE FROM developer WHERE id = $1", [id]);
 }
 
+async function getAllDevelopersBeforeCreate(name) {
+  const { rows } = await pool.query("SELECT * FROM developer WHERE name = $1", [
+    name,
+  ]);
+  return rows;
+}
+
+async function getAllDevelopersBeforeUpdate(id, name) {
+  const { rows } = await pool.query(
+    "SELECT * FROM developer WHERE name = $1 AND id != $2",
+    [name, id]
+  );
+  return rows;
+}
+
 async function getAllPublishers() {
   const { rows } = await pool.query("SELECT * FROM publisher ORDER BY name");
   return rows;
@@ -274,6 +289,8 @@ module.exports = {
   getDeveloperById,
   updateDeveloper,
   deleteDeveloper,
+  getAllDevelopersBeforeCreate,
+  getAllDevelopersBeforeUpdate,
   getAllPublishers,
   createPublisher,
   getPublisherById,

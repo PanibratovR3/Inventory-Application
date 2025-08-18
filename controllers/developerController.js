@@ -1,3 +1,4 @@
+const pool = require("../db/pool");
 const queries = require("../db/queries");
 
 const { body, validationResult } = require("express-validator");
@@ -44,8 +45,18 @@ const createDeveloperPost = [
       });
     } else {
       const { developerName } = request.body;
-      await queries.createDeveloper(developerName);
-      response.redirect("/developers");
+      const similarDevelopers = await queries.getAllDevelopersBeforeCreate(
+        developerName
+      );
+      if (similarDevelopers.length > 0) {
+        response.render("createDeveloper", {
+          title: "Add new developer",
+          errors: [{ msg: "Error: New developer already exists." }],
+        });
+      } else {
+        await queries.createDeveloper(developerName);
+        response.redirect("/developers");
+      }
     }
   },
 ];
@@ -73,8 +84,24 @@ const updateDeveloperPost = [
         errors: errors.array(),
       });
     } else {
-      await queries.updateDeveloper(Number(id), developerName);
-      response.redirect("/developers");
+      const similarDevelopers = await queries.getAllDevelopersBeforeUpdate(
+        id,
+        developerName
+      );
+      if (similarDevelopers.length > 0) {
+        response.render("updateDeveloper", {
+          title: "Update developer",
+          developer: developer,
+          errors: [
+            {
+              msg: "Error. Updated version of developer already exists.",
+            },
+          ],
+        });
+      } else {
+        await queries.updateDeveloper(Number(id), developerName);
+        response.redirect("/developers");
+      }
     }
   },
 ];
