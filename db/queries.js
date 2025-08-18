@@ -65,6 +65,21 @@ async function deletePublisher(id) {
   await pool.query("DELETE FROM publisher WHERE id = $1", [id]);
 }
 
+async function getAllPublishersBeforeCreate(name) {
+  const { rows } = await pool.query("SELECT * FROM publisher WHERE name = $1", [
+    name,
+  ]);
+  return rows;
+}
+
+async function getAllPublishersBeforeUpdate(id, name) {
+  const { rows } = await pool.query(
+    "SELECT * FROM publisher WHERE name = $1 AND id != $2",
+    [name, id]
+  );
+  return rows;
+}
+
 async function getAllPlatforms() {
   const { rows } = await pool.query("SELECT * FROM platform ORDER BY name");
   return rows;
@@ -311,6 +326,8 @@ module.exports = {
   getPublisherById,
   updatePublisher,
   deletePublisher,
+  getAllPublishersBeforeCreate,
+  getAllPublishersBeforeUpdate,
   getAllPlatforms,
   createPlatform,
   getPlatformById,

@@ -44,8 +44,22 @@ const createPublisherPost = [
         errors: errors.array(),
       });
     } else {
-      await queries.createPublisher(publisherName);
-      response.redirect("/publishers");
+      const similarPublishers = await queries.getAllPublishersBeforeCreate(
+        publisherName
+      );
+      if (similarPublishers.length > 0) {
+        response.render("createPublisher", {
+          title: "Add new publisher",
+          errors: [
+            {
+              msg: "Error. New publisher already exists.",
+            },
+          ],
+        });
+      } else {
+        await queries.createPublisher(publisherName);
+        response.redirect("/publishers");
+      }
     }
   },
 ];
@@ -73,8 +87,24 @@ const updatePublisherPost = [
         errors: errors.array(),
       });
     } else {
-      await queries.updatePublisher(id, publisherName);
-      response.redirect("/publishers");
+      const similarPublishers = await queries.getAllPublishersBeforeUpdate(
+        Number(id),
+        publisherName
+      );
+      if (similarPublishers.length > 0) {
+        response.render("updatePublisher", {
+          title: "Update publisher",
+          publisher: publisher,
+          errors: [
+            {
+              msg: "Error. Update version of publisher already exists.",
+            },
+          ],
+        });
+      } else {
+        await queries.updatePublisher(id, publisherName);
+        response.redirect("/publishers");
+      }
     }
   },
 ];
