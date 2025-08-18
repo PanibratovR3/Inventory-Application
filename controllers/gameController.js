@@ -117,7 +117,7 @@ const createGamePost = [
         errors: errors.array(),
       });
     } else {
-      await queries.createGame(
+      const similarGames = await queries.getAllGamesBeforeCreate(
         gameTitle,
         Number(developer),
         Number(genre),
@@ -125,7 +125,34 @@ const createGamePost = [
         Number(platform),
         dateOfRelease
       );
-      response.redirect("/");
+      if (similarGames.length > 0) {
+        const developers = await queries.getAllDevelopers();
+        const genres = await queries.getAllGenres();
+        const publishers = await queries.getAllPublishers();
+        const platforms = await queries.getAllPlatforms();
+        response.render("createGame", {
+          title: "Add new game",
+          developers: developers,
+          genres: genres,
+          publishers: publishers,
+          platforms: platforms,
+          errors: [
+            {
+              msg: "Error. New game already exists.",
+            },
+          ],
+        });
+      } else {
+        await queries.createGame(
+          gameTitle,
+          Number(developer),
+          Number(genre),
+          Number(publisher),
+          Number(platform),
+          dateOfRelease
+        );
+        response.redirect("/");
+      }
     }
   },
 ];
@@ -170,7 +197,7 @@ const updateGamePost = [
         errors: errors.array(),
       });
     } else {
-      await queries.updateGame(
+      const similarGames = await queries.getAllGamesBeforeUpdate(
         Number(id),
         gameTitle,
         Number(developer),
@@ -179,7 +206,32 @@ const updateGamePost = [
         Number(platform),
         dateOfRelease
       );
-      response.redirect("/");
+      if (similarGames.length > 0) {
+        response.render("updateGame", {
+          title: "Update game",
+          game: game,
+          developers: developers,
+          genres: genres,
+          publishers: publishers,
+          platforms: platforms,
+          errors: [
+            {
+              msg: "Error. Updated version of game already exists.",
+            },
+          ],
+        });
+      } else {
+        await queries.updateGame(
+          Number(id),
+          gameTitle,
+          Number(developer),
+          Number(genre),
+          Number(publisher),
+          Number(platform),
+          dateOfRelease
+        );
+        response.redirect("/");
+      }
     }
   },
 ];

@@ -254,6 +254,89 @@ async function deleteGame(id) {
   await pool.query("DELETE FROM game WHERE id = $1", [id]);
 }
 
+async function getAllGamesBeforeCreate(
+  title,
+  developerId,
+  genreId,
+  publisherId,
+  platformId,
+  dateOfRelease
+) {
+  const SQL = `
+SELECT
+    game.title,
+    developer.id AS developerid,
+    genre.id AS genreid,
+    publisher.id AS publisherid,
+    platform.id AS platformid,
+    game_publisher_platform.dateofrelease
+    FROM game
+      INNER JOIN developer ON game.developerid = developer.id
+      INNER JOIN genre ON game.genreid = genre.id
+      INNER JOIN game_publisher_platform ON game.id = game_publisher_platform.gameid
+      INNER JOIN publisher ON game_publisher_platform.publisherid = publisher.id
+      INNER JOIN platform ON game_publisher_platform.platformid = platform.id
+    WHERE game.title = $1
+        AND developer.id = $2
+        AND genre.id = $3
+        AND publisher.id = $4
+        AND platform.id = $5
+        AND game_publisher_platform.dateofrelease = $6
+  `;
+  const { rows } = await pool.query(SQL, [
+    title,
+    developerId,
+    genreId,
+    publisherId,
+    platformId,
+    dateOfRelease,
+  ]);
+  return rows;
+}
+
+async function getAllGamesBeforeUpdate(
+  id,
+  title,
+  developerId,
+  genreId,
+  publisherId,
+  platformId,
+  dateOfRelease
+) {
+  const SQL = `
+SELECT
+    game.title,
+    developer.id AS developerid,
+    genre.id AS genreid,
+    publisher.id AS publisherid,
+    platform.id AS platformid,
+    game_publisher_platform.dateofrelease
+    FROM game
+      INNER JOIN developer ON game.developerid = developer.id
+      INNER JOIN genre ON game.genreid = genre.id
+      INNER JOIN game_publisher_platform ON game.id = game_publisher_platform.gameid
+      INNER JOIN publisher ON game_publisher_platform.publisherid = publisher.id
+      INNER JOIN platform ON game_publisher_platform.platformid = platform.id
+    WHERE game.title = $1
+        AND developer.id = $2
+        AND genre.id = $3
+        AND publisher.id = $4
+        AND platform.id = $5
+        AND game_publisher_platform.dateofrelease = $6
+        AND game.id != $7
+  `;
+  const { rows } = await pool.query(SQL, [
+    title,
+    developerId,
+    genreId,
+    publisherId,
+    platformId,
+    dateOfRelease,
+    id,
+  ]);
+  return rows;
+}
+
 async function searchGames(
   name,
   developerId,
@@ -367,4 +450,6 @@ module.exports = {
   findGenresFromGames,
   findPublisherFromGames,
   findPlatformFromGames,
+  getAllGamesBeforeCreate,
+  getAllGamesBeforeUpdate,
 };
