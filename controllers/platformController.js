@@ -43,8 +43,22 @@ const createPlatformPost = [
         errors: errors.array(),
       });
     } else {
-      await queries.createPlatform(platformName);
-      response.redirect("/platforms");
+      const similarPlatforms = await queries.getAllPlatformsBeforeCreate(
+        platformName
+      );
+      if (similarPlatforms.length > 0) {
+        response.render("createPlatform", {
+          title: "Add new platform",
+          errors: [
+            {
+              msg: "Error. New platform already exists.",
+            },
+          ],
+        });
+      } else {
+        await queries.createPlatform(platformName);
+        response.redirect("/platforms");
+      }
     }
   },
 ];
@@ -72,8 +86,24 @@ const updatePlatformPost = [
         errors: errors.array(),
       });
     } else {
-      await queries.updatePlatform(Number(id), platformName);
-      response.redirect("/platforms");
+      const similarPlatforms = await queries.getAllPlatformsBeforeUpdate(
+        Number(id),
+        platformName
+      );
+      if (similarPlatforms.length > 0) {
+        response.render("updatePlatform", {
+          title: "Update platform",
+          platform: platform,
+          errors: [
+            {
+              msg: "Error. Updated version of platform already exists.",
+            },
+          ],
+        });
+      } else {
+        await queries.updatePlatform(Number(id), platformName);
+        response.redirect("/platforms");
+      }
     }
   },
 ];

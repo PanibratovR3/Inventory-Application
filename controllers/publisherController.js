@@ -97,7 +97,7 @@ const updatePublisherPost = [
           publisher: publisher,
           errors: [
             {
-              msg: "Error. Update version of publisher already exists.",
+              msg: "Error. Updated version of publisher already exists.",
             },
           ],
         });

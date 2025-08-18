@@ -105,6 +105,21 @@ async function deletePlatform(id) {
   await pool.query("DELETE FROM platform WHERE id = $1", [id]);
 }
 
+async function getAllPlatformsBeforeCreate(name) {
+  const { rows } = await pool.query("SELECT * FROM platform WHERE name = $1", [
+    name,
+  ]);
+  return rows;
+}
+
+async function getAllPlatformsBeforeUpdate(id, name) {
+  const { rows } = await pool.query(
+    "SELECT * FROM platform WHERE name = $1 AND id != $2",
+    [name, id]
+  );
+  return rows;
+}
+
 async function getAllGenres() {
   const { rows } = await pool.query("SELECT * FROM genre ORDER BY name;");
   return rows;
@@ -333,6 +348,8 @@ module.exports = {
   getPlatformById,
   updatePlatform,
   deletePlatform,
+  getAllPlatformsBeforeCreate,
+  getAllPlatformsBeforeUpdate,
   getAllGenres,
   createGenre,
   getGenreById,
