@@ -43,8 +43,20 @@ const createGenrePost = [
         errors: errors.array(),
       });
     } else {
-      await queries.createGenre(genreName);
-      response.redirect("/genres");
+      const similarGenres = await queries.getAllGenresBeforeCreate(genreName);
+      if (similarGenres.length > 0) {
+        response.render("createGenre", {
+          title: "Add new genre",
+          errors: [
+            {
+              msg: "Error. New genre already exists.",
+            },
+          ],
+        });
+      } else {
+        await queries.createGenre(genreName);
+        response.redirect("/genres");
+      }
     }
   },
 ];
@@ -72,8 +84,24 @@ const updateGenrePost = [
         errors: errors.array(),
       });
     } else {
-      await queries.updateGenre(id, genreName);
-      response.redirect("/genres");
+      const similarGenres = await queries.getAllGenresBeforeUpdate(
+        Number(id),
+        genreName
+      );
+      if (similarGenres.length > 0) {
+        response.render("updateGenre", {
+          title: "Update genre",
+          genre: genre,
+          errors: [
+            {
+              msg: "Error. Updated version of genre already exists.",
+            },
+          ],
+        });
+      } else {
+        await queries.updateGenre(id, genreName);
+        response.redirect("/genres");
+      }
     }
   },
 ];

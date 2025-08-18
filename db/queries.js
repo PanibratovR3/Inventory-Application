@@ -115,6 +115,21 @@ async function deleteGenre(id) {
   await pool.query("DELETE FROM genre WHERE id = $1", [id]);
 }
 
+async function getAllGenresBeforeCreate(name) {
+  const { rows } = await pool.query("SELECT * FROM genre WHERE name = $1", [
+    name,
+  ]);
+  return rows;
+}
+
+async function getAllGenresBeforeUpdate(id, name) {
+  const { rows } = await pool.query(
+    "SELECT * FROM genre WHERE name = $1 AND id != $2",
+    [name, id]
+  );
+  return rows;
+}
+
 async function getAllGames() {
   const SQL = `
     SELECT 
@@ -306,6 +321,8 @@ module.exports = {
   getGenreById,
   updateGenre,
   deleteGenre,
+  getAllGenresBeforeCreate,
+  getAllGenresBeforeUpdate,
   getAllGames,
   createGame,
   getGameById,

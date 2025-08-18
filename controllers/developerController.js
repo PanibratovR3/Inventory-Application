@@ -85,7 +85,7 @@ const updateDeveloperPost = [
       });
     } else {
       const similarDevelopers = await queries.getAllDevelopersBeforeUpdate(
-        id,
+        Number(id),
         developerName
       );
       if (similarDevelopers.length > 0) {
